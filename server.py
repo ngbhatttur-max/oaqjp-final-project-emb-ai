@@ -16,7 +16,7 @@ def detect_emotion():
 
     result = emotion_detector(text_to_analyze)
 
-    # Error handling for blank input
+    # Error handling for blank input or failed API
     if result["dominant_emotion"] is None:
         return "Invalid text! Please try again!"
 

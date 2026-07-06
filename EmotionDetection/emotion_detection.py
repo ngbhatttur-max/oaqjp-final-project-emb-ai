@@ -13,13 +13,27 @@ def emotion_detector(text_to_analyze):
             "dominant_emotion": None
         }
 
-    response = requests.post(
-        "https://sn-ws-emotion-detection.labs.skills.network/emotion_detection",
-        json={"text": text_to_analyze}
-    )
+    try:
+        response = requests.post(
+            "https://sn-ws-emotion-detection.labs.skills.network/emotion_detection",
+            json={"text": text_to_analyze}
+        )
 
-    # Handle API error response
-    if response.status_code == 400:
+        if response.status_code == 400:
+            return {
+                "anger": None,
+                "disgust": None,
+                "fear": None,
+                "joy": None,
+                "sadness": None,
+                "dominant_emotion": None
+            }
+
+        result = json.loads(response.text)
+        return result
+
+    except requests.exceptions.RequestException:
+        # Handle network errors gracefully
         return {
             "anger": None,
             "disgust": None,
@@ -28,7 +42,3 @@ def emotion_detector(text_to_analyze):
             "sadness": None,
             "dominant_emotion": None
         }
-
-    # Parse JSON response
-    result = json.loads(response.text)
-    return result
