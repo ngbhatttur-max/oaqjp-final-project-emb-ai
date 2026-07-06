@@ -2,9 +2,8 @@ import requests
 import json
 
 def emotion_detector(text_to_analyze):
-    # Call the emotion detection API
+    # Handle blank input before calling API
     if text_to_analyze.strip() == "":
-        # Simulate a 400 Bad Request response for blank input
         return {
             "anger": None,
             "disgust": None,
@@ -19,6 +18,7 @@ def emotion_detector(text_to_analyze):
         json={"text": text_to_analyze}
     )
 
+    # Handle API error response
     if response.status_code == 400:
         return {
             "anger": None,
