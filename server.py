@@ -1,3 +1,8 @@
+"""
+Flask server for emotion detection application.
+Provides routes to analyze text and return detected emotions.
+"""
+
 from flask import Flask, request, render_template
 from EmotionDetection import emotion_detector
 
@@ -5,10 +10,16 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
+    """Render the home page with the input form."""
     return render_template("index.html")
 
 @app.route("/emotionDetector", methods=["GET", "POST"])
 def detect_emotion():
+    """
+    Handle emotion detection requests.
+    Accepts text input from GET or POST, calls emotion_detector,
+    and returns either the emotion analysis or an error message.
+    """
     if request.method == "POST":
         text_to_analyze = request.form.get("text", "")
     else:
